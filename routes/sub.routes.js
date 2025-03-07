@@ -1,4 +1,9 @@
 import { Router } from "express";
+import authorize from "../middlewares/auth.middleware.js";
+import {
+    createSub,
+    getUserSub,
+} from "../controllers/sub.controller.js";
 
 const subRouter = Router();
 
@@ -10,9 +15,7 @@ subRouter.get("/:id", (req, res) => {
     res.send({ title: "Get sub details" });
 });
 
-subRouter.post("/", (req, res) => {
-    res.send({ title: "Create new sub" });
-});
+subRouter.post("/", authorize, createSub);
 
 subRouter.put("/:id", (req, res) => {
     res.send({ title: "Update sub" });
@@ -22,9 +25,7 @@ subRouter.delete("/:id", (req, res) => {
     res.send({ title: "Delete sub" });
 });
 
-subRouter.get("/user/:id", (req, res) => {
-    res.send({ title: "Get all user subs" });
-});
+subRouter.get("/user/:id", authorize, getUserSub);
 
 subRouter.put("/:id/cancel", (req, res) => {
     res.send({ title: "Cancel sub" });
